@@ -19,6 +19,6 @@ public enum MemberGrade {
             case BRONZE -> SILVER;
             case SILVER -> GOLD;
             case GOLD, PLATINUM -> PLATINUM;
-        }
+        };
     }
 }
