@@ -1,7 +1,6 @@
-package com.codeit.springwebbasic.controller;
+package com.codeit.springwebbasic.product.controller;
 
-import com.codeit.springwebbasic.entity.Product;
-import jakarta.servlet.http.HttpServletRequest;
+import com.codeit.springwebbasic.product.entity.Product;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

@@ -3,8 +3,15 @@ package com.codeit.springwebbasic.common.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestControllerAdvice
 public class CommonExceptionHandler {
@@ -27,6 +34,34 @@ public class CommonExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> methodArgumentNotValidHandler(MethodArgumentNotValidException e) {
+        e.printStackTrace();
+
+        // 1. 오류 결과를 담을 Map<필드명, 에러 메시지>
+        Map<String, String> errors = new HashMap<>();
+        /*
+        // BindingResult: 오류 결과 보고서
+        BindingResult bindingResult = e.getBindingResult();
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        for (FieldError error : fieldErrors) {
+            String field = error.getField();
+            String message = error.getDefaultMessage();
+            errors.put(field, message);
+            //errors.put(error.getField(), error.getDefaultMessage());
+        }
+         */
+
+
+        e.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+
+
+        return ResponseEntity.badRequest().body(errors);
+    }
+
+    // 미처 준비하지 못한 타입의 예외가 발생했을 시 처리할 메소드
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> exceptionHandler(Exception e) {
         e.printStackTrace();

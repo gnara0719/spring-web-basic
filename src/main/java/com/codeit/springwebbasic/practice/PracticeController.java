@@ -1,7 +1,5 @@
 package com.codeit.springwebbasic.practice;
 
-import com.codeit.springwebbasic.entity.Product;
-import lombok.*;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/practice/api/v1")

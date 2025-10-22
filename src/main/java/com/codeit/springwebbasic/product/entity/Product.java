@@ -1,4 +1,4 @@
-package com.codeit.springwebbasic.entity;
+package com.codeit.springwebbasic.product.entity;
 
 import lombok.*;
 
