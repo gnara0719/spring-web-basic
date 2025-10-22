@@ -38,7 +38,7 @@ public class CommonExceptionHandler {
     public ResponseEntity<?> methodArgumentNotValidHandler(MethodArgumentNotValidException e) {
         e.printStackTrace();
 
-        // 1. 오류 결과를 담을 Map<필드명, 에러 메시지>
+        // 오류 결과를 담을 Map<필드명, 에러 메시지>
         Map<String, String> errors = new HashMap<>();
         /*
         // BindingResult: 오류 결과 보고서
