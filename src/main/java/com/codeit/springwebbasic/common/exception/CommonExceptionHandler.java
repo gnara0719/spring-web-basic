@@ -1,5 +1,6 @@
 package com.codeit.springwebbasic.common.exception;
 
+import com.codeit.springwebbasic.common.dto.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestControllerAdvice
 public class CommonExceptionHandler {
@@ -21,10 +23,11 @@ public class CommonExceptionHandler {
     // 메서드를 호출한 상위 계층으로 전파됨
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<?> illegalArgsHandler(IllegalArgumentException e) {
+    public ResponseEntity<ApiResponse> illegalArgsHandler(IllegalArgumentException e) {
         e.printStackTrace();
-        // 예외의 원인을 http 상태 코드와 메시지를 통해서 알려주고 싶다 -> ResponseEntity
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        /* 예외의 원인을 http 상태 코드와 메시지를 통해서 알려주고 싶다 -> ResponseEntity */
+        ApiResponse<Object> response = ApiResponse.error("ILLEGAL_ARGS", e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IllegalStateException.class)
