@@ -1,6 +1,7 @@
 package com.codeit.springwebbasic.common.exception;
 
 import com.codeit.springwebbasic.common.dto.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestControllerAdvice
+@Slf4j
 public class CommonExceptionHandler {
 
     // Controller 단에서 발생하는 모든 예외를 일괄 처리하는 클래스
@@ -24,7 +26,9 @@ public class CommonExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiResponse> illegalArgsHandler(IllegalArgumentException e) {
-        e.printStackTrace();
+//        e.printStackTrace();
+        // log.error를 사용해서 예외 객체를 전달하면 스택 트레이스를 모두 전달한다.
+        log.error(e.getMessage(), e);
         /* 예외의 원인을 http 상태 코드와 메시지를 통해서 알려주고 싶다 -> ResponseEntity */
         ApiResponse<Object> response = ApiResponse.error("ILLEGAL_ARGS", e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -32,14 +36,14 @@ public class CommonExceptionHandler {
 
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<?> illegalStateHandler(IllegalArgumentException e) {
-        e.printStackTrace();
+        log.error(e.getMessage(), e);
         // 예외의 원인을 http 상태 코드와 메시지를 통해서 알려주고 싶다 -> ResponseEntity
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> methodArgumentNotValidHandler(MethodArgumentNotValidException e) {
-        e.printStackTrace();
+        log.error(e.getMessage(), e);
 
         // 오류 결과를 담을 Map<필드명, 에러 메시지>
         Map<String, String> errors = new HashMap<>();
@@ -67,7 +71,7 @@ public class CommonExceptionHandler {
     // 미처 준비하지 못한 타입의 예외가 발생했을 시 처리할 메소드
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> exceptionHandler(Exception e) {
-        e.printStackTrace();
+        log.error(e.getMessage(), e);
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
