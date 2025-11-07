@@ -4,3 +4,11 @@ spring:
 
 server:
   port: 8081
+
+Logging:
+  level:
+    com.codeit.springwebbasic.common.log.LogExample: debug    #패키지도 가능
+    org.springframework.web: warn
+
+  file:
+    name: /Users/apple/Desktop/codeit-7th-develop/Logs/app.log
