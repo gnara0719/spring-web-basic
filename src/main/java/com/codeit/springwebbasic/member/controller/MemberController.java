@@ -41,7 +41,7 @@ public class MemberController implements MemberControllerDocs {
     @PostMapping
     public ResponseEntity<ApiResponse<MemberResponseDto>> createMember(
             @Valid @RequestBody MemberCreateRequestDto dto) {
-        log.info("/api/v1/members: POST, dto {}", dto);
+//        log.info("/api/v1/members: POST, dto {}", dto);   AOP가 해줌
         MemberResponseDto responseDto = memberService.memberCreate(dto);
 
         ApiResponse<MemberResponseDto> response = ApiResponse.success(responseDto);
